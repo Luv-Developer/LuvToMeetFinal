@@ -9,7 +9,7 @@ const Signin = () => {
       options: {
         redirectTo: `${window.location.origin}/room`,
         queryParams: {
-          prompt: 'select_account', // ✅ force Google to show account picker
+          prompt: 'select_account',
           response_mode: 'query',
         },
       },
