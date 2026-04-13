@@ -54,7 +54,26 @@ const JoinRoom = () => {
 
                     <form onSubmit = {(e)=>{
                         e.preventDefault()
-                        window.location.href = link
+                        const trimmed = link.trim()
+                        if(!trimmed) {
+                            alert("Please enter a room link or ID")
+                            return
+                        }
+
+                        const match = trimmed.match(/\/room\/([^\/?#]+)/i)
+                        let roomId = match ? match[1] : trimmed.split(/[?#]/)[0]
+                        roomId = roomId.replace(/^\/+|\/+$/g, "")
+
+                        if(!roomId) {
+                            alert("Could not extract a room ID. Paste a valid room link or enter the room ID.")
+                            return
+                        }
+                        if(!/^[a-zA-Z0-9_-]+$/.test(roomId)) {
+                            alert("Room ID may only include letters, numbers, hyphens, and underscores.")
+                            return
+                        }
+
+                        navigate(`/room/${roomId}`)
                     }} className="join-form" id="joinForm">
                         <div className="form-group">
                             <label className="form-label" htmlFor="roomLink">
